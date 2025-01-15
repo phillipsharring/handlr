@@ -1,0 +1,32 @@
+{
+  "name": "phillipsharring/handlr",
+  "description": "A lightweight PHP middlware style framework",
+  "version": "0.1.0",
+  "type": "library",
+  "keywords": [ "framework", "handlr" ],
+  "homepage": "https://github.com/phillipsharring/handlr",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Phillip Harrington",
+      "email": "phillip@phillipharrington.comngton.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.4",
+    "ext-pdo": "*",
+    "psr/log": "^3.0",
+    "vlucas/phpdotenv": "^5.6",
+    "ramsey/uuid": "^4.7"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Handlr\\": "src/"
+    }
+  }
+}
