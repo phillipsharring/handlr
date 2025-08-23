@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Handlr\Database\Migrations;
 
 use Handlr\Database\Db;
-use Migrations; // NOSONAR
+use Migrations;
+
+// NOSONAR
 use PDO;
 
 class MigrationRunner
@@ -34,18 +36,27 @@ class MigrationRunner
         }
     }
 
+    public function createDatabase(): void
+    {
+        $this->db->execute(
+            "CREATE DATABASE IF NOT EXISTS `{$this->db->getDatabaseName()}`
+            CHARACTER SET utf8mb4
+            COLLATE utf8mb4_0900_ai_ci;"
+        );
+    }
+
     /**
      * Create the migrations table.
      */
     private function createMigrationsTable(): void
     {
         $sql = <<<SQL
-CREATE TABLE migrations (
-    `batch` INT UNSIGNED,
-    `file` VARCHAR(255) NOT NULL,
-    `ran_at` DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-SQL;
+            CREATE TABLE migrations (
+                `batch` INT UNSIGNED,
+                `file` VARCHAR(255) NOT NULL,
+                `ran_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+            SQL;
 
         $this->db->execute($sql);
         $this->log("Migrations table created.");
@@ -113,7 +124,9 @@ SQL;
     private function getAppliedMigrations(): array
     {
         $this->ensureMigrationsTableExists(); // Ensure the migrations table exists
-        return $this->db->execute("SELECT `batch`, `file` FROM `migrations` ORDER BY `file`")->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->execute("SELECT `batch`, `file` FROM `migrations` ORDER BY `file`")->fetchAll(
+            PDO::FETCH_ASSOC
+        );
     }
 
     private function getMaxBatch(): ?int

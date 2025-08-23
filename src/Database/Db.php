@@ -23,6 +23,13 @@ class Db
         $this->connection = new PDO($dsn, $user, $password, $options);
     }
 
+    public function getDatabaseName(): string
+    {
+        $dsn = Config::get('database.dsn');
+        preg_match('/dbname=([^;]+)/', $dsn, $matches);
+        return $matches[1] ?? '';
+    }
+
     public function execute(string $sql, array $params = []): false|PDOStatement
     {
         $stmt = $this->connection->prepare($sql);
