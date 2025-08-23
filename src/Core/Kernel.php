@@ -18,10 +18,10 @@ final class Kernel
     private Container $container;
     private Router $router;
 
-    public function __construct()
+    public function __construct(?string $baseDir = null)
     {
-        $this->baseDir = __DIR__ . '/../..';
-
+        // assumes this in {app}/vendor/phillipsharring/handlr/src/Core, reaches up to bootstrap.php dir.
+        $this->baseDir = $baseDir ?? __DIR__ . '/../../../../../';
         $this->container = new Container();
         $this->router = new Router($this->container);
 
