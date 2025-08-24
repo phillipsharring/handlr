@@ -14,7 +14,7 @@ use Handlr\Session\Session;
 
 final class Kernel
 {
-    private string $appDir;
+    private string $appRoot;
     private Container $container;
     private Router $router {
         get {
@@ -22,9 +22,9 @@ final class Kernel
         }
     }
 
-    public function __construct(string $appDir) // NOSONAR
+    public function __construct(string $appRoot) // NOSONAR
     {
-        $this->appDir = $appDir;
+        $this->appRoot = $appRoot;
         $this->container = new Container();
         $this->router = new Router($this->container);
 
@@ -45,7 +45,7 @@ final class Kernel
 
     private function registerLogger(): void
     {
-        $logFile = $this->appDir . '/logs/app.log';
+        $logFile = $this->appRoot . '/logs/app.log';
         $this->container->set(LogHandler::class, static function () use ($logFile) {
             $logger = new Log();
             $logger::setLogger(new Psr3Logger($logFile));
@@ -76,13 +76,13 @@ final class Kernel
 
     private function loadBootstrap(): void
     {
-        require_once $this->appDir . '/bootstrap.php'; // NOSONAR
+        require_once $this->appRoot . '/bootstrap.php'; // NOSONAR
     }
 
     private function loadRoutes(): void
     {
         $router = $this->router; // NOSONAR
-        require_once $this->appDir . '/app/routes.php'; // NOSONAR
+        require_once $this->appRoot . '/app/routes.php'; // NOSONAR
     }
 
     public function getRouter(): Router

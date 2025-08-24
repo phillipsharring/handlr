@@ -19,13 +19,26 @@ if ($action === 'help') {
 
 $batches = $batches === 'step' ? $batches : (int)$batches;
 
-if (!is_int($batches) && $batches !== 'step') {
+if (
+    (!is_int($batches) && $batches !== 'step')
+    || ($action === 'down' && $batches === 'step')
+) {
     help();
 }
 
-if ($action === 'down' && $batches === 'step') {
-    help();
-}
+// if ($action === 'db-create') {
+//     echo "DB Host: ";
+//     $host = trim(readline());
+//
+//     echo "DB User: ";
+//     $user = trim(readline());
+//
+//     echo "DB Password: ";
+//     shell_exec('stty -echo');  // hide input
+//     $password = trim(readline());
+//     shell_exec('stty echo');
+//     echo "\n";
+// }
 
 $db = new Db();
 $migrationPath = constant('HANDLR_APP_ROOT') . '/migrations';

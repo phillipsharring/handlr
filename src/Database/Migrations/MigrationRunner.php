@@ -36,7 +36,7 @@ class MigrationRunner
      */
     private function ensureMigrationsTableExists(): void
     {
-        $sql = "SHOW TABLES LIKE 'migrations'";
+        $sql = 'SHOW TABLES LIKE `migrations`';
         $result = $this->db->execute($sql)->fetchColumn();
 
         if (!$result) {
@@ -58,7 +58,7 @@ class MigrationRunner
             SQL;
 
         $this->db->execute($sql);
-        $this->log("Migrations table created.");
+        $this->log('Migrations table created.');
     }
 
     public function migrate(bool $stepWise = false): void
@@ -70,7 +70,7 @@ class MigrationRunner
         $newMigrations = array_diff($filteredFiles, $appliedMigrations);
 
         if (empty($newMigrations)) {
-            $this->log("Nothing to migrate.");
+            $this->log('Nothing to migrate.');
             return;
         }
 
@@ -105,7 +105,7 @@ class MigrationRunner
         $migrationFiles = array_map(static fn(array $row) => ($row['file']), $rollbackMigrations);
 
         if (empty($migrationFiles)) {
-            $this->log("Nothing to rollback.");
+            $this->log('Nothing to rollback.');
             return;
         }
 
@@ -123,7 +123,7 @@ class MigrationRunner
     private function getAppliedMigrations(): array
     {
         $this->ensureMigrationsTableExists(); // Ensure the migrations table exists
-        return $this->db->execute("SELECT `batch`, `file` FROM `migrations` ORDER BY `file`")->fetchAll(
+        return $this->db->execute('SELECT `batch`, `file` FROM `migrations` ORDER BY `file`')->fetchAll(
             PDO::FETCH_ASSOC
         );
     }
@@ -149,12 +149,12 @@ class MigrationRunner
 
     private function recordMigration(int $nextBatch, string $file): void
     {
-        $this->db->execute("INSERT INTO `migrations` (`batch`, `file`) VALUES (?, ?)", [$nextBatch, $file]);
+        $this->db->execute('INSERT INTO `migrations` (`batch`, `file`) VALUES (?, ?)', [$nextBatch, $file]);
     }
 
     private function removeMigrationRecord(string $file): void
     {
-        $this->db->execute("DELETE FROM `migrations` WHERE `file` = ?", [$file]);
+        $this->db->execute('DELETE FROM `migrations` WHERE `file` = ?', [$file]);
     }
 
     private function log(string $message): void
