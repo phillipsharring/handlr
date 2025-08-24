@@ -6,7 +6,7 @@ namespace Handlr\Views;
 
 class View
 {
-    protected string $basePath = __DIR__ . '/../../resources/views';
+    protected string $basePath = HANDLR_APP_ROOT . '/resources/views';
 
     public function __construct(private readonly string $templatePath, private ?array $data = []) {}
 
