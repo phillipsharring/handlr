@@ -1,5 +1,5 @@
 {
-  "name": "phillipsharring/handlr",
+  "name": "phillipsharring/handlr-framework",
   "description": "Handlr is a lightweight PHP middleware style framework.",
   "version": "0.1.0",
   "minimum-stability": "stable",
