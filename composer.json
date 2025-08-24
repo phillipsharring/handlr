@@ -1,13 +1,12 @@
 {
   "name": "phillipsharring/handlr",
-  "description": "A lightweight PHP middlware style framework",
+  "description": "Handlr is a lightweight PHP middleware style framework.",
   "version": "0.1.0",
+  "minimum-stability": "stable",
   "type": "library",
+  "license": "MIT",
   "keywords": [ "framework", "handlr" ],
   "homepage": "https://github.com/phillipsharring/handlr",
-  "minimum-stability": "stable",
-  "license": "MIT",
-  "scripts": {},
   "authors": [
     {
       "name": "Phillip Harrington",

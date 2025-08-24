@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR
+require_once __DIR__ . '/../../bootstrap.php';
 
 use Handlr\Database\Db;
 use Handlr\Database\Migrations\MigrationRunner;
@@ -28,7 +28,8 @@ if ($action === 'down' && $batches === 'step') {
 }
 
 $db = new Db();
-$runner = new MigrationRunner($db);
+$migrationPath = constant('HANDLR_APP_PATH') . '/migrations';
+$runner = new MigrationRunner($db, $migrationPath);
 
 switch ($action) {
     case 'up':

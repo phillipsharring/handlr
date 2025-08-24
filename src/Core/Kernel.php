@@ -14,18 +14,21 @@ use Handlr\Session\Session;
 
 final class Kernel
 {
-    private string $baseDir;
+    private string $appDir;
     private Container $container;
-    private Router $router;
+    private Router $router {
+        get {
+            return $this->router;
+        }
+    }
 
-    public function __construct(?string $baseDir = null)
+    public function __construct(string $appDir) // NOSONAR
     {
-        // assumes this in {app}/vendor/phillipsharring/handlr/src/Core, reaches up to bootstrap.php dir.
-        $this->baseDir = $baseDir ?? __DIR__ . '/../../../../../';
+        $this->appDir = $appDir;
         $this->container = new Container();
         $this->router = new Router($this->container);
 
-        $this->loadConfiguration();
+        $this->loadBootstrap();
 
         $this->registerServices();
         $this->registerGlobalHandlers();
@@ -42,7 +45,7 @@ final class Kernel
 
     private function registerLogger(): void
     {
-        $logFile = $this->baseDir . '/logs/app.log';
+        $logFile = $this->appDir . '/logs/app.log';
         $this->container->set(LogHandler::class, static function () use ($logFile) {
             $logger = new Log();
             $logger::setLogger(new Psr3Logger($logFile));
@@ -71,15 +74,15 @@ final class Kernel
         $this->router->addGlobalHandler($logHandler);
     }
 
-    private function loadConfiguration(): void
+    private function loadBootstrap(): void
     {
-        require_once $this->baseDir . '/bootstrap.php'; // NOSONAR
+        require_once $this->appDir . '/bootstrap.php'; // NOSONAR
     }
 
     private function loadRoutes(): void
     {
         $router = $this->router; // NOSONAR
-        require_once $this->baseDir . '/app/routes.php'; // NOSONAR
+        require_once $this->appDir . '/app/routes.php'; // NOSONAR
     }
 
     public function getRouter(): Router

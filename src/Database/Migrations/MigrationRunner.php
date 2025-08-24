@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Handlr\Database\Migrations;
 
 use Handlr\Database\Db;
-use Migrations;
 
 // NOSONAR
 use PDO;
@@ -16,11 +15,20 @@ class MigrationRunner
 
     private string $migrationPath;
 
-    public function __construct(Db $db, string $migrationPath = __DIR__ . '/../../../migrations')
+    public function __construct(Db $db, string $migrationPath)
     {
         $this->db = $db;
         $this->migrationPath = $migrationPath;
         $this->ensureMigrationsTableExists();
+    }
+
+    public function createDatabase(): void
+    {
+        $this->db->execute(
+            "CREATE DATABASE IF NOT EXISTS `{$this->db->getDatabaseName()}`
+            CHARACTER SET utf8mb4
+            COLLATE utf8mb4_0900_ai_ci;"
+        );
     }
 
     /**
@@ -34,15 +42,6 @@ class MigrationRunner
         if (!$result) {
             $this->createMigrationsTable();
         }
-    }
-
-    public function createDatabase(): void
-    {
-        $this->db->execute(
-            "CREATE DATABASE IF NOT EXISTS `{$this->db->getDatabaseName()}`
-            CHARACTER SET utf8mb4
-            COLLATE utf8mb4_0900_ai_ci;"
-        );
     }
 
     /**
