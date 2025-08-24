@@ -14,6 +14,6 @@ class ViewHandler implements Handler
 
     public function handle(Request $request, Response $response, array $args, callable $next): Response
     {
-        return $response->withBody(new View($this->templatePath, $this->data)->render());
+        return $response->withHtml(new View($this->templatePath, $this->data)->render());
     }
 }

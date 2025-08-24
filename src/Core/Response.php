@@ -40,6 +40,14 @@ class Response
         return $clone;
     }
 
+    public function withHtml(string $html, int $statusCode = self::HTTP_OK): self
+    {
+        return $this
+            ->withHeader('Content-Type', 'text/html; charset=utf-8')
+            ->withBody($html)
+            ->withStatus($statusCode);
+    }
+
     /**
      * @throws JsonException
      */
