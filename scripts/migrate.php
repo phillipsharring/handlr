@@ -28,7 +28,7 @@ if ($action === 'down' && $batches === 'step') {
 }
 
 $db = new Db();
-$migrationPath = constant('HANDLR_APP_PATH') . '/migrations';
+$migrationPath = constant('HANDLR_APP_ROOT') . '/migrations';
 $runner = new MigrationRunner($db, $migrationPath);
 
 switch ($action) {
