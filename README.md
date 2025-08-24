@@ -1,4 +1,4 @@
-# Handlr
+# Handlr Framework
 
 Handlr is a lightweight PHP middleware style framework.
 
